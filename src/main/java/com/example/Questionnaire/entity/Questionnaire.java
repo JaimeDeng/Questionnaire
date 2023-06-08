@@ -29,6 +29,9 @@ public class Questionnaire {
 	@JoinColumn(name = "creator" , referencedColumnName = "user_id", insertable = true, updatable = true)
 	private User user;	//creator欄位
 	
+	@Column(name = "status")
+	private String status;
+	
 	@Column(name = "start_time")
 	private String startTime;
 	

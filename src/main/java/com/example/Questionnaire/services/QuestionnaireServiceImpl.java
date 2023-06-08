@@ -215,4 +215,47 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				RtnCode.GET_SUCCESSFUL.getMessage(), true);
 	}
 
+	@Override
+	public QuestionnaireResp getQuestionnairesDataNum() {
+		 QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 Long dataNum = questionnaireDao.count();
+		 questionnaireResp.setDataNum(dataNum);
+		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
+		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
+		 questionnaireResp.success = true;
+		return questionnaireResp;
+	}
+
+	@Override
+	public QuestionnaireResp getQuestionnairesByPage(Integer page) {
+		QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 questionnaireResp.setQuestionnaires(questionnaireDao.getQuestionnairesByPage( (page-1) * 5) );
+		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
+		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
+		 questionnaireResp.success = true;
+		return questionnaireResp;
+	}
+
+	@Override
+	public QuestionnaireResp getQuestionnaireNumByKeyword(String keyword) {
+		 QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 Long dataNum = questionnaireDao.getQuestionnaireNumByKeyword(keyword);
+		 questionnaireResp.setDataNum(dataNum);
+		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
+		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
+		 questionnaireResp.success = true;
+		return questionnaireResp;
+	}
+
+	@Override
+	public QuestionnaireResp getQuestionnaireByKeywordAsPage(Integer page, String keyword) {
+		QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		List<Questionnaire> questionnaires = questionnaireDao.getQuestionnaireByKeywordAsPage( (page-1) * 5 , keyword);
+		 questionnaireResp.setQuestionnaires(questionnaires);
+		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
+		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
+		 questionnaireResp.success = true;
+		return questionnaireResp;
+	}
+
 }

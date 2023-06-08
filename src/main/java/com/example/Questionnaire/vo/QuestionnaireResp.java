@@ -14,6 +14,8 @@ public class QuestionnaireResp extends Questionnaire {
 	
 	public boolean success;
 	
+	private Long dataNum;
+	
 	private List<Questionnaire> questionnaires;
 
 	
@@ -26,6 +28,14 @@ public class QuestionnaireResp extends Questionnaire {
 		this.questionnaires = questionnaires;
 	}
 	
+	public Long getDataNum() {
+		return dataNum;
+	}
+
+	public void setDataNum(Long dataNum) {
+		this.dataNum = dataNum;
+	}
+
 	public QuestionnaireResp() {
 	}
 	

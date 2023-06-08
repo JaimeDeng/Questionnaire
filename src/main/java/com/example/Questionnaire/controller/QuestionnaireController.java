@@ -95,16 +95,41 @@ public class QuestionnaireController {
 		return questionnaireService.getAllQuestionnaire();
 	}
 	
+	//獲取問卷資料量
+	@GetMapping(value = "/getQuestionnairesDataNum" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnairesDataNum() {
+		return questionnaireService.getQuestionnairesDataNum();
+	}
+	
+	//獲取問卷指定頁面資料
+	@GetMapping(value = "/getQuestionnairesByPage/{page}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnairesByPage(@PathVariable Integer page) {
+		return questionnaireService.getQuestionnairesByPage(page);
+	}
+	
 	//獲取指定ID問卷資訊
 	@GetMapping(value = "/getQuestionnaireByQuestionnaireId/{questionnaireId}" , produces = "application/json;charset=UTF-8")
 	public QuestionnaireResp getQuestionnaireByQuestionnaireId(@PathVariable Long questionnaireId) {
 		return questionnaireService.getQuestionnaireByQuestionnaireId(questionnaireId);
 	}
 	
+	//獲取關鍵字標題問卷資訊數量
+	@GetMapping(value = "/getQuestionnaireNumByKeyword/{keyword}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnaireNumByKeyword(@PathVariable String keyword) {
+		return questionnaireService.getQuestionnaireNumByKeyword(keyword);
+	}
+	
 	//獲取關鍵字標題問卷資訊
 	@GetMapping(value = "/getQuestionnaireByKeyword/{keyword}" , produces = "application/json;charset=UTF-8")
 	public QuestionnaireResp getQuestionnaireByKeyword(@PathVariable String keyword) {
 		return questionnaireService.getQuestionnaireByKeyword(keyword);
+	}
+	
+	//獲取關鍵字標題問卷資訊並分頁
+	@GetMapping(value = "/getQuestionnaireByKeywordAsPage/{keyword}/{page}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnaireByKeywordAsPage(@PathVariable String keyword , 
+			@PathVariable Integer page) {
+		return questionnaireService.getQuestionnaireByKeywordAsPage(page , keyword);
 	}
 	
 	//刪除指定ID問卷資訊
