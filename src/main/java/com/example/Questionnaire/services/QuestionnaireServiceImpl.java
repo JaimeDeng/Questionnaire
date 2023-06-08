@@ -48,31 +48,33 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			return new QuestionnaireResp(RtnCode.USER_NOT_EXISTS.getCode() 
 					, RtnCode.USER_NOT_EXISTS.getMessage() , false);
 		}
-		if(!StringUtils.hasText(questionnaireReq.getStartTime())) {
+		if(!StringUtils.hasText(questionnaireReq.getStartTimeStr())) {
 			return new QuestionnaireResp(RtnCode.STARTTIME_CANNOT_EMPTY.getCode() 
 					, RtnCode.STARTTIME_CANNOT_EMPTY.getMessage() , false);
 		}
-		if(!StringUtils.hasText(questionnaireReq.getEndTime())) {
+		if(!StringUtils.hasText(questionnaireReq.getEndTimeStr())) {
 			return new QuestionnaireResp(RtnCode.ENDTIME_CANNOT_EMPTY.getCode() 
 					, RtnCode.ENDTIME_CANNOT_EMPTY.getMessage() , false);
 		}
-		if(questionnaireReq.getStartTime().equals(questionnaireReq.getEndTime())) {
+		if(questionnaireReq.getStartTimeStr().equals(questionnaireReq.getEndTimeStr())) {
 			return new QuestionnaireResp(RtnCode.SAMETIME_ERROR.getCode() 
 					, RtnCode.SAMETIME_ERROR.getMessage() , false);
 		}
 		
-		if(questionnaireReq.getStartTime().length() != 10 || questionnaireReq.getEndTime().length() != 10) {
+		if(questionnaireReq.getStartTimeStr().length() != 10 || questionnaireReq.getEndTimeStr().length() != 10) {
         	return new QuestionnaireResp(RtnCode.DATE_ILLEGAL.getCode() 
 					, RtnCode.DATE_ILLEGAL.getMessage() , false);
 		}
 		//檢驗日期格式 & 次序
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime;
+		Date endTime;
 		dateFormat.setLenient(false);	//設定日期檢驗模式為嚴格 , 不可有寬鬆模式容忍2月30這樣的狀況
         try {
-        	Date startDate = dateFormat.parse(questionnaireReq.getStartTime());
-        	Date endDate = dateFormat.parse(questionnaireReq.getEndTime());
+        	startTime = dateFormat.parse(questionnaireReq.getStartTimeStr());
+        	endTime = dateFormat.parse(questionnaireReq.getEndTimeStr());
         	
-        	if(endDate.before(startDate)) {
+        	if(endTime.before(startTime)) {
         		return new QuestionnaireResp(RtnCode.DATE_SEQUENCE_ERROE.getCode() 
     					, RtnCode.DATE_SEQUENCE_ERROE.getMessage() , false);
         	}
@@ -82,7 +84,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         }
         
         Questionnaire questionnaire = new Questionnaire(questionnaireReq.getTitle() , questionnaireReq.getDescription() , 
-        		user.get() , questionnaireReq.getStartTime() , questionnaireReq.getEndTime());
+        		user.get() , startTime , endTime);
         questionnaireDao.save(questionnaire);
 		return new QuestionnaireResp(RtnCode.ADD_SUCCESSFUL.getCode() 
 				, RtnCode.ADD_SUCCESSFUL.getMessage() , true);
@@ -109,32 +111,34 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			return new QuestionnaireResp(RtnCode.USER_NOT_EXISTS.getCode() 
 					, RtnCode.USER_NOT_EXISTS.getMessage() , false);
 		}
-		if(!StringUtils.hasText(questionnaireReq.getStartTime())) {
+		if(!StringUtils.hasText(questionnaireReq.getStartTimeStr())) {
 			return new QuestionnaireResp(RtnCode.STARTTIME_CANNOT_EMPTY.getCode() 
 					, RtnCode.STARTTIME_CANNOT_EMPTY.getMessage() , false);
 		}
-		if(!StringUtils.hasText(questionnaireReq.getEndTime())) {
+		if(!StringUtils.hasText(questionnaireReq.getEndTimeStr())) {
 			return new QuestionnaireResp(RtnCode.ENDTIME_CANNOT_EMPTY.getCode() 
 					, RtnCode.ENDTIME_CANNOT_EMPTY.getMessage() , false);
 		}
-		if(questionnaireReq.getStartTime().equals(questionnaireReq.getEndTime())) {
+		if(questionnaireReq.getStartTimeStr().equals(questionnaireReq.getEndTimeStr())) {
 			return new QuestionnaireResp(RtnCode.SAMETIME_ERROR.getCode() 
 					, RtnCode.SAMETIME_ERROR.getMessage() , false);
 		}
 		
-		if(questionnaireReq.getStartTime().length() != 10 || questionnaireReq.getEndTime().length() != 10) {
+		if(questionnaireReq.getStartTimeStr().length() != 10 || questionnaireReq.getEndTimeStr().length() != 10) {
         	return new QuestionnaireResp(RtnCode.DATE_ILLEGAL.getCode() 
 					, RtnCode.DATE_ILLEGAL.getMessage() , false);
 		}
 		
 		//檢驗日期格式 & 次序
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime;
+		Date endTime;
 		dateFormat.setLenient(false);	//設定日期檢驗模式為嚴格 , 不可有寬鬆模式容忍2月30這樣的狀況
         try {
-        	Date startDate = dateFormat.parse(questionnaireReq.getStartTime());
-        	Date endDate = dateFormat.parse(questionnaireReq.getEndTime());
+        	startTime = dateFormat.parse(questionnaireReq.getStartTimeStr());
+        	endTime = dateFormat.parse(questionnaireReq.getEndTimeStr());
         	
-        	if(endDate.before(startDate)) {
+        	if(endTime.before(startTime)) {
         		return new QuestionnaireResp(RtnCode.DATE_SEQUENCE_ERROE.getCode() 
     					, RtnCode.DATE_SEQUENCE_ERROE.getMessage() , false);
         	}
@@ -252,6 +256,40 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
 		List<Questionnaire> questionnaires = questionnaireDao.getQuestionnaireByKeywordAsPage( (page-1) * 5 , keyword);
 		 questionnaireResp.setQuestionnaires(questionnaires);
+		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
+		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
+		 questionnaireResp.success = true;
+		return questionnaireResp;
+	}
+
+	@Override
+	public QuestionnaireResp getQuestionnairesInTimeFrame(Integer page, String startTime, String endTime) {
+		 QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 if(startTime.equals("null")) {
+			 startTime = null;
+		 }
+		 if(endTime.equals("null")) {
+			 endTime = null;
+		 }
+		 List<Questionnaire> questionnaires = questionnaireDao.getQuestionnairesInTimeFrame((page-1) * 5, startTime , endTime);
+		 questionnaireResp.setQuestionnaires(questionnaires);
+		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
+		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
+		 questionnaireResp.success = true;
+		return questionnaireResp;
+	}
+
+	@Override
+	public QuestionnaireResp getQuestionnaireNumInTimeFrame(String startTime, String endTime) {
+		 QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 if(startTime.equals("null")) {
+			 startTime = null;
+		 }
+		 if(endTime.equals("null")) {
+			 endTime = null;
+		 }
+		 Long dataNum = questionnaireDao.getQuestionnaireNumInTimeFrame(startTime , endTime);
+		 questionnaireResp.setDataNum(dataNum);
 		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
 		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
 		 questionnaireResp.success = true;

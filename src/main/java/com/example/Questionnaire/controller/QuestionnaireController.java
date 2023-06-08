@@ -132,6 +132,19 @@ public class QuestionnaireController {
 		return questionnaireService.getQuestionnaireByKeywordAsPage(page , keyword);
 	}
 	
+	//獲取指定時間範圍問卷資訊數量
+	@GetMapping(value = "/getQuestionnaireNumInTimeFrame/{startTime}/{endTime}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnaireNumInTimeFrame(@PathVariable String startTime , @PathVariable String endTime) {
+		return questionnaireService.getQuestionnaireNumInTimeFrame(startTime , endTime);
+	}
+	
+	//獲取指定時間範圍問卷資訊並分頁
+	@GetMapping(value = "/getQuestionnairesInTimeFrame/{startTime}/{endTime}/{page}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnairesInTimeFrame(@PathVariable String startTime , 
+			@PathVariable String endTime , @PathVariable Integer page) {
+		return questionnaireService.getQuestionnairesInTimeFrame(page , startTime , endTime);
+	}
+	
 	//刪除指定ID問卷資訊
 	@DeleteMapping(value = "/deleteQuestionnaire/{questionnaireId}" , produces = "application/json;charset=UTF-8")
 	public QuestionnaireResp deleteQuestionnaire(@PathVariable Long questionnaireId) {

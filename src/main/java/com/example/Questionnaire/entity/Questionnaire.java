@@ -1,5 +1,6 @@
 package com.example.Questionnaire.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -33,10 +34,10 @@ public class Questionnaire {
 	private String status;
 	
 	@Column(name = "start_time")
-	private String startTime;
+	private Date startTime;
 	
 	@Column(name = "end_time")
-	private String endTime;
+	private Date endTime;
 	
 	//================questionnaireId 外鍵關聯=================
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "questionnaire")
@@ -72,19 +73,19 @@ public class Questionnaire {
 		this.user = user;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
@@ -116,8 +117,8 @@ public class Questionnaire {
 	public Questionnaire() {
 	}
 	
-	public Questionnaire(String title, String description, User user, String startTime,
-			String endTime) {
+	public Questionnaire(String title, String description, User user, Date startTime,
+			Date endTime) {
 		this.title = title;
 		this.description = description;
 		this.user = user;
@@ -125,8 +126,8 @@ public class Questionnaire {
 		this.endTime = endTime;
 	}
 
-	public Questionnaire(Long questionnaireId, String title, String description, User user, String startTime,
-			String endTime) {
+	public Questionnaire(Long questionnaireId, String title, String description, User user, Date startTime,
+			Date endTime) {
 		this.questionnaireId = questionnaireId;
 		this.title = title;
 		this.description = description;

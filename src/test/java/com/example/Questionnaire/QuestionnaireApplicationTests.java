@@ -14,8 +14,6 @@ class QuestionnaireApplicationTests {
 
 	@Test
 	void contextLoads() {
-		var num = questionnaireDao.getQuestionnaireByKeywordAsPage(0 , "調查");
-		System.out.println(num);
 	}
 
 }

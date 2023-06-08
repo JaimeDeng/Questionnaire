@@ -25,6 +25,16 @@ public interface QuestionnaireDao extends JpaRepository<Questionnaire , Long> {
 	public List<Questionnaire> getQuestionnaireByKeywordAsPage(@Param(value = "page")Integer page , 
 			@Param(value = "keyword")String keyword);
 	
+	@Query(value="SELECT * FROM Questionnaire q WHERE (q.start_time >= :startTime OR :startTime IS NULL) AND "
+			+ "(q.end_time <= :endTime OR :endTime IS NULL) LIMIT :page, 5", nativeQuery = true )
+	public List<Questionnaire> getQuestionnairesInTimeFrame(@Param(value = "page")Integer page , 
+			@Param(value = "startTime")String startTime , @Param(value = "endTime")String endTime);
+	
+	@Query(value="SELECT COUNT(*) FROM Questionnaire q WHERE (q.start_time >= :startTime OR :startTime IS NULL) AND "
+			+ "(q.end_time <= :endTime OR :endTime IS NULL)", nativeQuery = true )
+	public Long getQuestionnaireNumInTimeFrame(@Param(value = "startTime")String startTime , 
+			@Param(value = "endTime")String endTime);
+	
 	//LIMIT 筆數index起始(page - 1 x 筆數) , 筆數
 	@Query(value="SELECT * FROM Questionnaire q LIMIT :page, 5", nativeQuery = true)
 	public List<Questionnaire> getQuestionnairesByPage(@Param(value = "page")Integer page);
