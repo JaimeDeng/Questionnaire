@@ -54,12 +54,12 @@ public class QuestionServiceImpl implements QuestionService {
 						RtnCode.TYPE_CANNOT_EMPTY.getMessage(), false);
 			}
 			//如果是選擇題那options就不可為null
-			if(questionReq.getType() == "select" && !StringUtils.hasText(questionReq.getOptions())) {
+			if(questionReq.getType().equals("select")  && !StringUtils.hasText(questionReq.getOptions())) {
 				return new QuestionResp(RtnCode.OPTIONS_CANNOT_EMPTY.getCode(), 
 						RtnCode.OPTIONS_CANNOT_EMPTY.getMessage(), false);
 			}
 			//如果是簡答題那options就必須為null
-			if(questionReq.getType() == "short-answer" && StringUtils.hasText(questionReq.getOptions())) {
+			if(questionReq.getType().equals("short-answer") && StringUtils.hasText(questionReq.getOptions())) {
 				return new QuestionResp(RtnCode.OPTIONS_CANNOT_INPUT.getCode(), 
 						RtnCode.OPTIONS_CANNOT_INPUT.getMessage(), false);
 			}
@@ -97,12 +97,12 @@ public class QuestionServiceImpl implements QuestionService {
 							RtnCode.TYPE_CANNOT_EMPTY.getMessage(), false);
 				}
 				//如果是選擇題那options就不可為null
-				if(thisQuestionReq.getType() == "select" && !StringUtils.hasText(thisQuestionReq.getOptions())) {
+				if(thisQuestionReq.getType().equals("select") && !StringUtils.hasText(thisQuestionReq.getOptions())) {
 					return new QuestionResp(RtnCode.OPTIONS_CANNOT_EMPTY.getCode(), 
 							RtnCode.OPTIONS_CANNOT_EMPTY.getMessage(), false);
 				}
 				//如果是簡答題那options就必須為null
-				if(thisQuestionReq.getType() == "short-answer" && StringUtils.hasText(thisQuestionReq.getOptions())) {
+				if(thisQuestionReq.getType().equals("short-answer") && StringUtils.hasText(thisQuestionReq.getOptions())) {
 					return new QuestionResp(RtnCode.OPTIONS_CANNOT_INPUT.getCode(), 
 							RtnCode.OPTIONS_CANNOT_INPUT.getMessage(), false);
 				}
@@ -153,12 +153,12 @@ public class QuestionServiceImpl implements QuestionService {
 					RtnCode.TYPE_CANNOT_EMPTY.getMessage(), false);
 		}
 		//如果是選擇題那options就不可為null
-		if(questionReq.getType() == "select" && !StringUtils.hasText(questionReq.getOptions())) {
+		if(questionReq.getType().equals("select") && !StringUtils.hasText(questionReq.getOptions())) {
 			return new QuestionResp(RtnCode.OPTIONS_CANNOT_EMPTY.getCode(), 
 					RtnCode.OPTIONS_CANNOT_EMPTY.getMessage(), false);
 		}
 		//如果是簡答題那options就必須為null
-		if(questionReq.getType() == "short-answer" && StringUtils.hasText(questionReq.getOptions())) {
+		if(questionReq.getType().equals("short-answer") && StringUtils.hasText(questionReq.getOptions())) {
 			return new QuestionResp(RtnCode.OPTIONS_CANNOT_INPUT.getCode(), 
 					RtnCode.OPTIONS_CANNOT_INPUT.getMessage(), false);
 		}

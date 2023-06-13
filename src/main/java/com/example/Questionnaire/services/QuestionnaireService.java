@@ -14,8 +14,8 @@ public interface QuestionnaireService {
 	public QuestionnaireResp getQuestionnaireNumByKeyword (String keyword);
 	public QuestionnaireResp getQuestionnaireByKeyword (String keyword);
 	public QuestionnaireResp getQuestionnaireByKeywordAsPage (Integer page , String keyword);
-	public QuestionnaireResp getQuestionnairesInTimeFrame (Integer page , String startTime , String endTime);
-	public QuestionnaireResp getQuestionnaireNumInTimeFrame (String startTime , String endTime);
+	public QuestionnaireResp getQuestionnairesInCriteria (Integer page ,String keyword, String startTime , String endTime);
+	public QuestionnaireResp getQuestionnaireNumInCriteria (String keyword , String startTime , String endTime);
 	public QuestionnaireResp deleteQuestionnaire (Long questionnaireId);
 
 }

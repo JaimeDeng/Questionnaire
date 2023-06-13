@@ -132,17 +132,18 @@ public class QuestionnaireController {
 		return questionnaireService.getQuestionnaireByKeywordAsPage(page , keyword);
 	}
 	
-	//獲取指定時間範圍問卷資訊數量
-	@GetMapping(value = "/getQuestionnaireNumInTimeFrame/{startTime}/{endTime}" , produces = "application/json;charset=UTF-8")
-	public QuestionnaireResp getQuestionnaireNumInTimeFrame(@PathVariable String startTime , @PathVariable String endTime) {
-		return questionnaireService.getQuestionnaireNumInTimeFrame(startTime , endTime);
+	//獲取指定條件範圍問卷資訊數量
+	@GetMapping(value = "/getQuestionnaireNumInCriteria/{keyword}/{startTime}/{endTime}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnaireNumInCriteria(@PathVariable String keyword , 
+			@PathVariable String startTime , @PathVariable String endTime) {
+		return questionnaireService.getQuestionnaireNumInCriteria(keyword , startTime , endTime);
 	}
 	
 	//獲取指定時間範圍問卷資訊並分頁
-	@GetMapping(value = "/getQuestionnairesInTimeFrame/{startTime}/{endTime}/{page}" , produces = "application/json;charset=UTF-8")
-	public QuestionnaireResp getQuestionnairesInTimeFrame(@PathVariable String startTime , 
+	@GetMapping(value = "/getQuestionnairesInCriteria/{keyword}/{startTime}/{endTime}/{page}" , produces = "application/json;charset=UTF-8")
+	public QuestionnaireResp getQuestionnairesInCriteria(@PathVariable String keyword , @PathVariable String startTime , 
 			@PathVariable String endTime , @PathVariable Integer page) {
-		return questionnaireService.getQuestionnairesInTimeFrame(page , startTime , endTime);
+		return questionnaireService.getQuestionnairesInCriteria(page , keyword , startTime , endTime);
 	}
 	
 	//刪除指定ID問卷資訊

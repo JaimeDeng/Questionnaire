@@ -263,15 +263,20 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	}
 
 	@Override
-	public QuestionnaireResp getQuestionnairesInTimeFrame(Integer page, String startTime, String endTime) {
-		 QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
-		 if(startTime.equals("null")) {
-			 startTime = null;
-		 }
-		 if(endTime.equals("null")) {
-			 endTime = null;
-		 }
-		 List<Questionnaire> questionnaires = questionnaireDao.getQuestionnairesInTimeFrame((page-1) * 5, startTime , endTime);
+	public QuestionnaireResp getQuestionnairesInCriteria(Integer page, String keyword, String startTime,
+			String endTime) {
+		if(keyword.equals("null")) {
+			keyword = null;
+		}
+		if(startTime.equals("null")) {
+			startTime = null;
+		}
+		if(endTime.equals("null")) {
+			endTime = null;
+		}
+		QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 List<Questionnaire> questionnaires = questionnaireDao.getQuestionnairesInCriteria((page-1) * 5, keyword, 
+				 startTime , endTime);
 		 questionnaireResp.setQuestionnaires(questionnaires);
 		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
 		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
@@ -280,15 +285,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	}
 
 	@Override
-	public QuestionnaireResp getQuestionnaireNumInTimeFrame(String startTime, String endTime) {
-		 QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
-		 if(startTime.equals("null")) {
-			 startTime = null;
-		 }
-		 if(endTime.equals("null")) {
-			 endTime = null;
-		 }
-		 Long dataNum = questionnaireDao.getQuestionnaireNumInTimeFrame(startTime , endTime);
+	public QuestionnaireResp getQuestionnaireNumInCriteria(String keyword, String startTime, String endTime) {
+		if(keyword.equals("null")) {
+			keyword = null;
+		}
+		if(startTime.equals("null")) {
+			startTime = null;
+		}
+		if(endTime.equals("null")) {
+			endTime = null;
+		}
+		QuestionnaireResp questionnaireResp = new  QuestionnaireResp();
+		 Long dataNum = questionnaireDao.getQuestionnaireNumInCriteria(keyword, startTime , endTime);
 		 questionnaireResp.setDataNum(dataNum);
 		 questionnaireResp.code = RtnCode.GET_SUCCESSFUL.getCode();
 		 questionnaireResp.message = RtnCode.GET_SUCCESSFUL.getMessage();
